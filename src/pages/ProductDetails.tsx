@@ -1,28 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getProductBySlug } from "@/data/products";
+import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { Button } from "@/components/ui/button";
-import { Star, ShoppingBag, ArrowLeft, Heart, Check, Share2, Info } from "lucide-react";
+import { Star, ShoppingBag, ArrowLeft, Heart, Check, Share2, Plus, Minus } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Helmet } from "react-helmet-async";
-import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/context/CartContext";
 
 const ProductDetails = () => {
-    const { slug } = useParams();
+    const { slug, category, subcategory } = useParams();
     const product = getProductBySlug(slug || "");
-    const [selectedVariantId, setSelectedVariantId] = useState<string>("");
     const [quantity, setQuantity] = useState(1);
-    const [activeTab, setActiveTab] = useState<'description' | 'ingredients' | 'howTo'>('description');
     const { addToCart } = useCart();
-
-    useEffect(() => {
-        if (product && product.variants.length > 0) {
-            setSelectedVariantId(product.variants[0].variant_id);
-        }
-    }, [product]);
 
     if (!product) {
         return (
@@ -40,24 +31,21 @@ const ProductDetails = () => {
         );
     }
 
-    const selectedVariant = product.variants.find(v => v.variant_id === selectedVariantId) || product.variants[0];
-    const currentPrice = selectedVariant.discounted_price || selectedVariant.variant_price;
-    const originalPrice = selectedVariant.variant_mrp || selectedVariant.variant_price;
-    const discount = selectedVariant.discount_percentage;
+    const relatedProducts = getRelatedProducts(product);
 
     const handleAddToCart = () => {
-        if (selectedVariantId) {
-            addToCart(product.id, selectedVariantId, quantity);
-        }
+        addToCart(product.id.toString(), product.sku, quantity);
     };
+
+    const incrementQuantity = () => setQuantity(prev => Math.min(prev + 1, 10));
+    const decrementQuantity = () => setQuantity(prev => Math.max(prev - 1, 1));
 
     return (
         <div className="min-h-screen bg-background">
             <Helmet>
-                <title>{product.seo.meta_title || `${product.name} | BeautyBeet`}</title>
-                <meta name="description" content={product.seo.meta_description || product.short_description} />
-                <meta name="keywords" content={product.seo.meta_keywords.join(", ")} />
-                <link rel="canonical" href={`https://beautybloom.com/shop/${product.category_code}/${product.subcategory_code}/${product.slug}`} />
+                <title>{product.name} | BeautyBeet</title>
+                <meta name="description" content={product.short_description} />
+                <link rel="canonical" href={`https://beautybeet.com/shop/${product.category}/${product.subcategory}/${product.slug}`} />
             </Helmet>
 
             <Header />
@@ -67,217 +55,187 @@ const ProductDetails = () => {
                     <nav className="flex items-center text-sm text-muted-foreground mb-8">
                         <Link to="/" className="hover:text-primary transition-colors">Home</Link>
                         <span className="mx-2">/</span>
-                        <Link to="/#shop" className="hover:text-primary transition-colors">{product.category}</Link>
+                        <Link to={`/shop/${product.category}`} className="hover:text-primary transition-colors capitalize">
+                            {product.category.replace(/-/g, ' ')}
+                        </Link>
+                        <span className="mx-2">/</span>
+                        <Link to={`/shop/${product.category}/${product.subcategory}`} className="hover:text-primary transition-colors capitalize">
+                            {product.subcategory.replace(/-/g, ' ')}
+                        </Link>
                         <span className="mx-2">/</span>
                         <span className="text-foreground font-medium">{product.name}</span>
                     </nav>
 
                     <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
-                        {/* Product Images Gallery */}
+                        {/* Product Image/Icon */}
                         <div className="space-y-4">
                             <ScrollReveal animation="fade-in">
-                                <div className="relative aspect-square rounded-3xl overflow-hidden bg-muted shadow-soft border border-border/50">
-                                    <img
-                                        src={selectedVariant.image_url || product.images[0].url}
-                                        alt={product.name}
-                                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                                    />
-                                    {product.is_bestseller && (
-                                        <span className="absolute top-6 left-6 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-400 text-amber-950 shadow-sm">
-                                            Bestseller
-                                        </span>
-                                    )}
-                                    {discount && discount > 0 && (
-                                        <span className="absolute top-6 right-6 px-3 py-1.5 rounded-full text-xs font-bold bg-rose-500 text-white shadow-sm">
-                                            {discount}% OFF
-                                        </span>
-                                    )}
+                                <div className="relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-primary/5 to-accent/5 shadow-soft border border-border/50 flex items-center justify-center">
+                                    <span className="text-[150px]">{product.icon}</span>
+
+                                    {/* Badges */}
+                                    <div className="absolute top-4 left-4 flex flex-col gap-2">
+                                        {product.is_bestseller && (
+                                            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase bg-amber-400 text-amber-950">
+                                                Bestseller
+                                            </span>
+                                        )}
+                                        {product.is_new && (
+                                            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase bg-accent text-accent-foreground">
+                                                New
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {/* Wishlist */}
+                                    <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-card hover:bg-card/80 flex items-center justify-center shadow-soft transition-all">
+                                        <Heart className="w-5 h-5 text-muted-foreground hover:text-rose-500" />
+                                    </button>
                                 </div>
                             </ScrollReveal>
-                            {/* Thumbnails if multiple images (Future enhancement) */}
                         </div>
 
                         {/* Product Info */}
-                        <ScrollReveal animation="fade-up" delay={0.1}>
-                            <div className="flex flex-col h-full">
-                                <h1 className="font-display text-3xl md:text-5xl text-foreground mb-2 leading-tight">
+                        <div>
+                            <ScrollReveal animation="fade-up">
+                                {/* SKU */}
+                                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
+                                    SKU: {product.sku}
+                                </p>
+
+                                {/* Title */}
+                                <h1 className="font-display text-3xl md:text-4xl text-foreground mb-4">
                                     {product.name}
                                 </h1>
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="flex items-center gap-0.5">
-                                        {[1, 2, 3, 4, 5].map((star) => (
+
+                                {/* Rating */}
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="flex items-center gap-1">
+                                        {[...Array(5)].map((_, i) => (
                                             <Star
-                                                key={star}
-                                                className={`w-4 h-4 ${star <= Math.round(product.rating)
-                                                    ? "text-amber-500 fill-amber-500"
-                                                    : "text-muted-foreground/30"
-                                                    }`}
+                                                key={i}
+                                                className={`w-5 h-5 ${i < Math.floor(product.rating) ? 'text-amber-500 fill-amber-500' : 'text-muted-foreground'}`}
                                             />
                                         ))}
                                     </div>
-                                    <span className="text-sm text-muted-foreground font-medium">
-                                        {product.rating} ({product.reviews_count} Reviews)
+                                    <span className="text-sm text-muted-foreground">
+                                        {product.rating} ({product.reviews_count} reviews)
                                     </span>
                                 </div>
 
-                                <Separator className="mb-6" />
-
-                                <div className="flex items-end gap-3 mb-6">
-                                    <span className="text-4xl font-bold text-primary">
-                                        ₹{currentPrice}
-                                    </span>
-                                    {originalPrice > currentPrice && (
-                                        <span className="text-xl text-muted-foreground line-through mb-1.5 font-medium">
-                                            ₹{originalPrice}
-                                        </span>
-                                    )}
-                                    <span className="text-xs text-muted-foreground mb-2 ml-1">
-                                        (Inclusive of all taxes)
-                                    </span>
+                                {/* Price */}
+                                <div className="flex items-baseline gap-3 mb-6">
+                                    <span className="text-4xl font-bold text-foreground">₹{product.price}</span>
+                                    <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>
                                 </div>
 
-                                <p className="text-muted-foreground leading-relaxed mb-8 text-lg">
-                                    {product.short_description}
-                                </p>
+                                {/* Description */}
+                                <div className="mb-8">
+                                    <p className="text-muted-foreground leading-relaxed">
+                                        {product.short_description}
+                                    </p>
+                                </div>
 
-                                {/* Variant Selector */}
-                                {product.variants.length > 0 && (
-                                    <div className="mb-8">
-                                        <span className="block text-sm font-semibold mb-3">Select Size</span>
-                                        <div className="flex flex-wrap gap-3">
-                                            {product.variants.map((variant) => (
-                                                <button
-                                                    key={variant.variant_id}
-                                                    onClick={() => setSelectedVariantId(variant.variant_id)}
-                                                    className={`px-4 py-2 rounded-lg border text-sm font-medium transition-all ${selectedVariantId === variant.variant_id
-                                                            ? "border-primary bg-primary/5 text-primary ring-1 ring-primary"
-                                                            : "border-input hover:border-foreground/50 text-muted-foreground"
-                                                        }`}
-                                                >
-                                                    {variant.variant_name}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* Actions */}
-                                <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                                    <div className="flex items-center border border-input rounded-xl h-12 w-fit">
+                                {/* Quantity Selector */}
+                                <div className="flex items-center gap-4 mb-6">
+                                    <span className="text-sm font-medium">Quantity:</span>
+                                    <div className="flex items-center border border-border rounded-lg">
                                         <button
-                                            className="w-12 h-full flex items-center justify-center hover:bg-muted rounded-l-xl transition-colors text-lg"
-                                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                            onClick={decrementQuantity}
+                                            className="p-3 hover:bg-muted transition-colors"
                                         >
-                                            -
+                                            <Minus className="w-4 h-4" />
                                         </button>
-                                        <span className="w-12 text-center font-semibold text-lg">{quantity}</span>
+                                        <span className="w-12 text-center font-medium">{quantity}</span>
                                         <button
-                                            className="w-12 h-full flex items-center justify-center hover:bg-muted rounded-r-xl transition-colors text-lg"
-                                            onClick={() => setQuantity(quantity + 1)}
+                                            onClick={incrementQuantity}
+                                            className="p-3 hover:bg-muted transition-colors"
                                         >
-                                            +
+                                            <Plus className="w-4 h-4" />
                                         </button>
                                     </div>
-                                    <Button size="lg" className="flex-1 h-12 text-base shadow-lg hover:shadow-xl transition-all" onClick={handleAddToCart}>
-                                        <ShoppingBag className="w-5 h-5 mr-2" />
-                                        Add to Cart  •  ₹{currentPrice * quantity}
+                                </div>
+
+                                {/* Add to Cart + Buy Now */}
+                                <div className="flex gap-4 mb-8">
+                                    <Button
+                                        size="lg"
+                                        className="flex-1 gap-2"
+                                        onClick={handleAddToCart}
+                                    >
+                                        <ShoppingBag className="w-5 h-5" />
+                                        Add to Cart
                                     </Button>
-                                    <Button variant="outline" size="lg" className="h-12 w-12 px-0 rounded-xl">
+                                    <Button size="lg" variant="outline">
                                         <Heart className="w-5 h-5" />
                                     </Button>
+                                    <Button size="lg" variant="outline">
+                                        <Share2 className="w-5 h-5" />
+                                    </Button>
                                 </div>
 
-                                {/* Features Tabs */}
-                                <div className="mt-8">
-                                    <div className="flex border-b border-border">
-                                        <button
-                                            onClick={() => setActiveTab('description')}
-                                            className={`pb-3 px-4 text-sm font-medium transition-all relative ${activeTab === 'description' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
-                                        >
-                                            Description
-                                            {activeTab === 'description' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-t-full" />}
-                                        </button>
-                                        <button
-                                            onClick={() => setActiveTab('ingredients')}
-                                            className={`pb-3 px-4 text-sm font-medium transition-all relative ${activeTab === 'ingredients' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
-                                        >
-                                            Key Ingredients
-                                            {activeTab === 'ingredients' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-t-full" />}
-                                        </button>
-                                        <button
-                                            onClick={() => setActiveTab('howTo')}
-                                            className={`pb-3 px-4 text-sm font-medium transition-all relative ${activeTab === 'howTo' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
-                                        >
-                                            How to Use
-                                            {activeTab === 'howTo' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-t-full" />}
-                                        </button>
+                                {/* Features */}
+                                <div className="space-y-3 p-6 bg-muted/30 rounded-2xl">
+                                    <div className="flex items-center gap-3 text-sm">
+                                        <Check className="w-5 h-5 text-green-500" />
+                                        <span>100% Ayurvedic & Natural Ingredients</span>
                                     </div>
-
-                                    <div className="py-6 min-h-[200px]">
-                                        {activeTab === 'description' && (
-                                            <div className="prose prose-sm max-w-none text-muted-foreground animate-fade-in" dangerouslySetInnerHTML={{ __html: product.long_description }} />
-                                        )}
-
-                                        {activeTab === 'ingredients' && (
-                                            <div className="space-y-4 animate-fade-in">
-                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                    {product.key_ingredients.length > 0 ? product.key_ingredients.map((ing, idx) => (
-                                                        <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                                                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                                <Check className="w-4 h-4 text-primary" />
-                                                            </div>
-                                                            <div>
-                                                                <h4 className="font-semibold text-sm">{ing.name} {ing.percentage && <span className="text-xs text-muted-foreground">({ing.percentage})</span>}</h4>
-                                                                <p className="text-xs text-muted-foreground">{ing.benefits}</p>
-                                                            </div>
-                                                        </div>
-                                                    )) : (
-                                                        <p className="text-sm text-muted-foreground italic">Full ingredient list coming soon.</p>
-                                                    )}
-                                                </div>
-                                                {product.full_ingredient_list && (
-                                                    <div className="mt-4 pt-4 border-t border-border">
-                                                        <span className="text-xs font-semibold uppercase text-muted-foreground mb-1 block">Full Ingredients</span>
-                                                        <p className="text-xs text-muted-foreground leading-relaxed">{product.full_ingredient_list}</p>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {activeTab === 'howTo' && (
-                                            <div className="space-y-4 animate-fade-in">
-                                                {product.usage_instructions.steps.length > 0 ? (
-                                                    <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
-                                                        {product.usage_instructions.steps.map((step, idx) => (
-                                                            <li key={idx} className="pl-2">{step}</li>
-                                                        ))}
-                                                    </ol>
-                                                ) : (
-                                                    <p className="text-sm text-muted-foreground">Usage instructions will be updated shortly.</p>
-                                                )}
-                                                {product.usage_instructions.frequency && (
-                                                    <p className="text-sm font-medium mt-4">Frequency: <span className="font-normal text-muted-foreground">{product.usage_instructions.frequency}</span></p>
-                                                )}
-                                            </div>
-                                        )}
+                                    <div className="flex items-center gap-3 text-sm">
+                                        <Check className="w-5 h-5 text-green-500" />
+                                        <span>Lab Tested & Dermatologically Safe</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-sm">
+                                        <Check className="w-5 h-5 text-green-500" />
+                                        <span>Free Shipping on Orders Above ₹499</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-sm">
+                                        <Check className="w-5 h-5 text-green-500" />
+                                        <span>30-Day Money Back Guarantee</span>
                                     </div>
                                 </div>
-
-                                <div className="mt-8 pt-8 border-t border-border flex items-center justify-between gap-4">
-                                    <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                                        <Share2 className="w-4 h-4" />
-                                        Share this product
-                                    </div>
-                                    <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                                        <Info className="w-4 h-4" />
-                                        Have a question?
-                                    </div>
-                                </div>
-                            </div>
-                        </ScrollReveal>
+                            </ScrollReveal>
+                        </div>
                     </div>
+
+                    {/* Related Products */}
+                    {relatedProducts.length > 0 && (
+                        <section className="mt-20">
+                            <ScrollReveal animation="fade-up">
+                                <h2 className="font-display text-2xl md:text-3xl text-foreground mb-8">
+                                    You May Also Like
+                                </h2>
+                                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    {relatedProducts.map((relProduct) => (
+                                        <Link
+                                            key={relProduct.id}
+                                            to={`/shop/${relProduct.category}/${relProduct.subcategory}/${relProduct.slug}`}
+                                            className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300"
+                                        >
+                                            <div className="aspect-square bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
+                                                <span className="text-5xl group-hover:scale-110 transition-transform duration-300">{relProduct.icon}</span>
+                                            </div>
+                                            <div className="p-4">
+                                                <p className="text-xs text-primary font-medium uppercase tracking-wide mb-1">
+                                                    {relProduct.subcategory.replace(/-/g, ' ')}
+                                                </p>
+                                                <h3 className="font-medium text-sm text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                                                    {relProduct.name}
+                                                </h3>
+                                                <div className="flex items-center gap-2">
+                                                    <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                                                    <span className="text-xs">{relProduct.rating}</span>
+                                                    <span className="text-sm font-bold ml-auto">₹{relProduct.price}</span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </ScrollReveal>
+                        </section>
+                    )}
                 </div>
             </main>
+
             <Footer />
         </div>
     );

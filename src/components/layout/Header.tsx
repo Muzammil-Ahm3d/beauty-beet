@@ -18,8 +18,8 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-white font-display font-bold text-xl shadow-lg group-hover:shadow-primary/25 transition-all duration-300">
-              B
+            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg group-hover:shadow-primary/25 transition-all duration-300">
+              <img src="/beautybeet_logo.jpeg" alt="BeautyBeet Logo" className="w-full h-full object-cover" />
             </div>
             <span className="font-display font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
               BeautyBeet
