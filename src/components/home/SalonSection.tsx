@@ -30,10 +30,10 @@ const featuredSalons = [
 
 const SalonSection = () => {
   return (
-    <section id="salons" className="py-16 md:py-24 bg-muted/30">
+    <section id="salons" className="py-10 md:py-16 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-8">
           <p className="text-sm font-medium text-primary uppercase tracking-wider mb-3">
             Partner Salons
           </p>
@@ -47,7 +47,7 @@ const SalonSection = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-xl mx-auto mb-12">
+        <div className="max-w-xl mx-auto mb-8">
           <div className="flex items-center gap-3 p-2 bg-card rounded-full border border-border shadow-soft">
             <div className="flex-1 flex items-center gap-3 px-4">
               <Search className="w-5 h-5 text-muted-foreground" />
@@ -64,14 +64,14 @@ const SalonSection = () => {
         </div>
 
         {/* Featured Salons */}
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
+        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-none snap-x mb-10 items-stretch">
           {featuredSalons.map((salon, index) => (
             <div
               key={index}
-              className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300"
+              className="w-[280px] min-w-[280px] max-w-[280px] flex-shrink-0 snap-start group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 h-[420px] flex flex-col"
             >
-              {/* Image Area */}
-              <div className="h-48 bg-muted overflow-hidden">
+              {/* Image Area - Fixed Height */}
+              <div className="h-[224px] w-full bg-muted overflow-hidden relative">
                 <img
                   src={salon.image}
                   alt={salon.name}

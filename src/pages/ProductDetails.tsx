@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { Button } from "@/components/ui/button";
@@ -8,12 +8,22 @@ import Footer from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Helmet } from "react-helmet-async";
 import { useCart } from "@/context/CartContext";
+import ProductInfoSection from "@/components/shop/ProductInfoSection";
+import AIReviews from "@/components/shop/AIReviews";
 
 const ProductDetails = () => {
     const { slug, category, subcategory } = useParams();
     const product = getProductBySlug(slug || "");
     const [quantity, setQuantity] = useState(1);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const { addToCart } = useCart();
+
+    // Reset selected image when product changes
+    useEffect(() => {
+        if (product && product.images.length > 0) {
+            setSelectedImage(product.images[0].url);
+        }
+    }, [product]);
 
     if (!product) {
         return (
@@ -68,29 +78,60 @@ const ProductDetails = () => {
 
                     <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
                         {/* Product Image/Icon */}
+                        {/* Product Image/Icon */}
                         <div className="space-y-4">
                             <ScrollReveal animation="fade-in">
-                                <div className="relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-primary/5 to-accent/5 shadow-soft border border-border/50 flex items-center justify-center">
-                                    <span className="text-[150px]">{product.icon}</span>
+                                <div className="space-y-4">
+                                    {/* Main Image */}
+                                    <div className="relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-primary/5 to-accent/5 shadow-soft border border-border/50 flex items-center justify-center">
+                                        <img
+                                            src={selectedImage || product.images[0]?.url || "/placeholder-product.png"}
+                                            alt={product.name}
+                                            className="w-full h-full object-cover transition-all duration-300"
+                                            onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                                        />
 
-                                    {/* Badges */}
-                                    <div className="absolute top-4 left-4 flex flex-col gap-2">
-                                        {product.is_bestseller && (
-                                            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase bg-amber-400 text-amber-950">
-                                                Bestseller
-                                            </span>
-                                        )}
-                                        {product.is_new && (
-                                            <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase bg-accent text-accent-foreground">
-                                                New
-                                            </span>
-                                        )}
+                                        {/* Badges */}
+                                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                                            {product.is_bestseller && (
+                                                <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase bg-amber-400 text-amber-950">
+                                                    Bestseller
+                                                </span>
+                                            )}
+                                            {product.is_new && (
+                                                <span className="px-3 py-1.5 rounded-full text-xs font-bold uppercase bg-accent text-accent-foreground">
+                                                    New
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        {/* Wishlist */}
+                                        <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-card hover:bg-card/80 flex items-center justify-center shadow-soft transition-all">
+                                            <Heart className="w-5 h-5 text-muted-foreground hover:text-rose-500" />
+                                        </button>
                                     </div>
 
-                                    {/* Wishlist */}
-                                    <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-card hover:bg-card/80 flex items-center justify-center shadow-soft transition-all">
-                                        <Heart className="w-5 h-5 text-muted-foreground hover:text-rose-500" />
-                                    </button>
+                                    {/* Thumbnails */}
+                                    {product.images.length > 1 && (
+                                        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                                            {product.images.map((img, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => setSelectedImage(img.url)}
+                                                    className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${selectedImage === img.url
+                                                        ? "border-primary shadow-md scale-105"
+                                                        : "border-transparent opacity-70 hover:opacity-100"
+                                                        }`}
+                                                >
+                                                    <img
+                                                        src={img.url}
+                                                        alt={`View ${idx + 1}`}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </ScrollReveal>
                         </div>
@@ -125,7 +166,7 @@ const ProductDetails = () => {
 
                                 {/* Price */}
                                 <div className="flex items-baseline gap-3 mb-6">
-                                    <span className="text-4xl font-bold text-foreground">₹{product.price}</span>
+                                    <span className="text-4xl font-bold text-foreground">₹{product.base_price}</span>
                                     <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>
                                 </div>
 
@@ -197,6 +238,20 @@ const ProductDetails = () => {
                         </div>
                     </div>
 
+                    {/* Detailed Info Section (PDF Content & Testimonials) */}
+                    <ProductInfoSection
+                        description={product.detailed_description || ""}
+                        testimonials={product.testimonials}
+                        faqs={product.faqs}
+                    />
+
+                    {/* AI Reviews Section */}
+                    <AIReviews
+                        summary={product.ai_summary}
+                        topics={product.ai_popular_topics}
+                        reviews={product.ai_verified_reviews}
+                    />
+
                     {/* Related Products */}
                     {relatedProducts.length > 0 && (
                         <section className="mt-20">
@@ -212,7 +267,12 @@ const ProductDetails = () => {
                                             className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300"
                                         >
                                             <div className="aspect-square bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
-                                                <span className="text-5xl group-hover:scale-110 transition-transform duration-300">{relProduct.icon}</span>
+                                                <img
+                                                    src={relProduct.images[0]?.url || "/placeholder-product.png"}
+                                                    alt={relProduct.name}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                                                />
                                             </div>
                                             <div className="p-4">
                                                 <p className="text-xs text-primary font-medium uppercase tracking-wide mb-1">
@@ -224,7 +284,7 @@ const ProductDetails = () => {
                                                 <div className="flex items-center gap-2">
                                                     <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                                                     <span className="text-xs">{relProduct.rating}</span>
-                                                    <span className="text-sm font-bold ml-auto">₹{relProduct.price}</span>
+                                                    <span className="text-sm font-bold ml-auto">₹{relProduct.base_price}</span>
                                                 </div>
                                             </div>
                                         </Link>

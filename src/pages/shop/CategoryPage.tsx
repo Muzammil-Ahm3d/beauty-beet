@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Breadcrumbs from "@/components/shop/Breadcrumbs";
 import { getCategoryBySlug, getSubcategoriesForCategory } from "@/data/categories";
-import { getProductsByCategory, SimpleProduct } from "@/data/products";
+import { getProductsByCategory, ProductV2 } from "@/data/products";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ArrowRight, Star, Heart, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -152,31 +152,37 @@ const CategoryPage = () => {
 
 // Product Card component for bestsellers
 interface ProductCardProps {
-    product: SimpleProduct;
+    product: ProductV2;
     categorySlug: string;
     onAddToCart: () => void;
 }
 
 const ProductCard = ({ product, categorySlug, onAddToCart }: ProductCardProps) => {
     const productUrl = `/shop/${categorySlug}/${product.subcategory}/${product.slug}`;
+    const displayImage = product.images?.[0]?.url || "/placeholder-product.png";
 
     return (
         <div className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300">
             {/* Icon/Image Area */}
-            <div className="relative aspect-square bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
-                <Link to={productUrl} className="block w-full h-full flex items-center justify-center">
-                    <span className="text-6xl group-hover:scale-110 transition-transform duration-300">{product.icon}</span>
+            <div className="relative aspect-square bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center overflow-hidden">
+                <Link to={productUrl} className="block w-full h-full">
+                    <img
+                        src={displayImage}
+                        alt={product.images?.[0]?.alt_text || product.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => { e.currentTarget.src = "/placeholder-product.png"; }}
+                    />
                 </Link>
 
                 {/* Badges */}
-                <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
                     {product.is_bestseller && (
-                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-400 text-amber-950">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-400 text-amber-950 shadow-sm">
                             Bestseller
                         </span>
                     )}
                     {product.is_new && (
-                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-accent text-accent-foreground">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-accent text-accent-foreground shadow-sm">
                             New
                         </span>
                     )}
@@ -188,10 +194,11 @@ const ProductCard = ({ product, categorySlug, onAddToCart }: ProductCardProps) =
                 </button>
 
                 {/* Quick Add */}
-                <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-10">
+                {/* Quick Add */}
+                <div className="absolute bottom-3 left-3 right-3 z-10">
                     <Button
                         variant="default"
-                        className="w-full"
+                        className="w-full shadow-lg"
                         size="sm"
                         onClick={(e) => { e.preventDefault(); onAddToCart(); }}
                     >
@@ -223,7 +230,7 @@ const ProductCard = ({ product, categorySlug, onAddToCart }: ProductCardProps) =
 
                 {/* Price */}
                 <div className="flex items-center gap-2">
-                    <span className="text-lg font-bold text-foreground">₹{product.price}</span>
+                    <span className="text-lg font-bold text-foreground">₹{product.base_price}</span>
                 </div>
             </div>
         </div>

@@ -44,7 +44,7 @@ export const NAV_ITEMS: NavItem[] = [
     },
     {
         label: "Solutions",
-        href: "/solutions",
+        href: "/solutions/fix-your-hair",
         type: "dropdown",
         items: [
             { label: "Fix Your Hair", href: "/solutions/fix-your-hair" },

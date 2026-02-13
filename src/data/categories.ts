@@ -24,7 +24,7 @@ export const CATEGORIES: Record<string, Category> = {
         name: "Hair Care",
         slug: "hair-care",
         description: "Explore our comprehensive range of Ayurvedic hair oils, serums, gels, shampoos, and conditioners designed for every hair concern.",
-        heroImage: "/images/categories/hair-care-hero.jpg",
+        heroImage: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80",
         subcategories: {
             "hair-oils": { id: "HC-HO", name: "Hair Oils", slug: "hair-oils", productCount: 8, description: "Natural Ayurvedic hair oils for growth, dandruff removal, and scalp health" },
             "hair-serums": { id: "HC-HS", name: "Hair Serums", slug: "hair-serums", productCount: 7, description: "Targeted serums for hair fall, damage repair, and growth" },
@@ -37,7 +37,7 @@ export const CATEGORIES: Record<string, Category> = {
         name: "Skin Care",
         slug: "skin-care",
         description: "Discover premium Ayurvedic face oils, serums, gels, and packs for radiant, healthy skin.",
-        heroImage: "/images/categories/skin-care-hero.jpg",
+        heroImage: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80",
         subcategories: {
             "face-oils-serums": { id: "SC-FO", name: "Face Oils & Serums", slug: "face-oils-serums", productCount: 7, description: "Luxurious face oils and targeted serums" },
             "face-gels": { id: "SC-FG", name: "Face Gels", slug: "face-gels", productCount: 8, description: "Lightweight gels for daily skincare" },
@@ -50,7 +50,7 @@ export const CATEGORIES: Record<string, Category> = {
         name: "Body Care",
         slug: "body-care",
         description: "Pamper your body with our natural scrubs and handcrafted soaps.",
-        heroImage: "/images/categories/body-care-hero.jpg",
+        heroImage: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80",
         subcategories: {
             "body-scrubs": { id: "BC-BS", name: "Body Scrubs", slug: "body-scrubs", productCount: 2, description: "Exfoliating body scrubs for smooth skin" },
             "soaps": { id: "BC-SO", name: "Soaps", slug: "soaps", productCount: 3, description: "Handcrafted herbal soaps" }
@@ -61,13 +61,13 @@ export const CATEGORIES: Record<string, Category> = {
         name: "Lip Care & Makeup",
         slug: "lip-care-makeup",
         description: "Complete lip care range from scrubs to lipsticks, all made with natural ingredients.",
-        heroImage: "/images/categories/lip-care-hero.jpg",
+        heroImage: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&q=80",
         subcategories: {
-            "lip-scrubs": { id: "LM-LR", name: "Lip Scrubs", slug: "lip-scrubs", productCount: 2, description: "Gentle lip exfoliators" },
+            "lip-scrubs": { id: "LM-LS", name: "Lip Scrubs", slug: "lip-scrubs", productCount: 2, description: "Gentle lip exfoliators" },
             "lip-balms": { id: "LM-LB", name: "Lip Balms", slug: "lip-balms", productCount: 4, description: "Nourishing lip balms" },
-            "lip-serums": { id: "LM-LS", name: "Lip Serums", slug: "lip-serums", productCount: 2, description: "Targeted lip treatment serums" },
-            "lip-gloss": { id: "LM-GL", name: "Lip Gloss", slug: "lip-gloss", productCount: 3, description: "Shiny, hydrating lip glosses" },
-            "lipstick": { id: "LM-LI", name: "Lipstick", slug: "lipstick", productCount: 2, description: "Long-lasting herbal lipsticks" }
+            "lip-serums": { id: "LM-LSe", name: "Lip Serums", slug: "lip-serums", productCount: 2, description: "Targeted lip treatment serums" },
+            "lip-gloss": { id: "LM-LG", name: "Lip Gloss", slug: "lip-gloss", productCount: 3, description: "Shiny, hydrating lip glosses" },
+            "lipstick": { id: "LM-LP", name: "Lipstick", slug: "lipstick", productCount: 2, description: "Long-lasting herbal lipsticks" }
         }
     },
     "eye-care": {
@@ -75,7 +75,7 @@ export const CATEGORIES: Record<string, Category> = {
         name: "Eye Care",
         slug: "eye-care",
         description: "Safe and effective eye makeup products.",
-        heroImage: "/images/categories/eye-care-hero.jpg",
+        heroImage: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&q=80",
         subcategories: {
             "eye-makeup": { id: "EC-EM", name: "Eye Makeup", slug: "eye-makeup", productCount: 1, description: "Natural eye makeup products" }
         }

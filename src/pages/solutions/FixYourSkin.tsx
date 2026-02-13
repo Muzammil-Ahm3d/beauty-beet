@@ -54,7 +54,7 @@ const FixYourSkin = () => {
                     {/* Hero */}
                     <ScrollReveal animation="fade-in">
                         <div className="text-center max-w-3xl mx-auto mb-12">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-white text-sm font-medium mb-6">
                                 <Sparkles className="w-4 h-4" />
                                 Personalized Skin Solutions
                             </div>
@@ -79,8 +79,8 @@ const FixYourSkin = () => {
                                         key={concern.id}
                                         onClick={() => setSelectedConcern(concern.id)}
                                         className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 text-left ${selectedConcern === concern.id
-                                                ? "border-accent bg-accent/5 shadow-lg"
-                                                : "border-border hover:border-accent/50 hover:shadow-md"
+                                            ? "border-accent bg-accent/5 shadow-lg"
+                                            : "border-border hover:border-accent/50 hover:shadow-md"
                                             }`}
                                     >
                                         {selectedConcern === concern.id && (

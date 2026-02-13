@@ -36,10 +36,10 @@ const dermatologists = [
 
 const DermatologistSection = () => {
   return (
-    <section id="dermatologists" className="py-16 md:py-24 bg-background">
+    <section id="dermatologists" className="py-10 md:py-16 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-8">
           <p className="text-sm font-medium text-accent uppercase tracking-wider mb-3">
             Expert Consultations
           </p>
@@ -53,7 +53,7 @@ const DermatologistSection = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-xl mx-auto mb-12">
+        <div className="max-w-xl mx-auto mb-8">
           <div className="flex items-center gap-3 p-2 bg-card rounded-full border border-border shadow-soft">
             <div className="flex-1 flex items-center gap-3 px-4">
               <Search className="w-5 h-5 text-muted-foreground" />
@@ -70,25 +70,29 @@ const DermatologistSection = () => {
         </div>
 
         {/* Dermatologists Grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
+        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-none snap-x mb-10">
           {dermatologists.map((doctor, index) => (
             <div
               key={index}
-              className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300"
+              className="w-[280px] min-w-[280px] max-w-[280px] flex-shrink-0 snap-start group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 h-[450px] flex flex-col"
             >
+              {/* Image Area - Fixed Height */}
+              <div className="h-[240px] w-full bg-muted overflow-hidden relative">
+                <img
+                  src={doctor.image}
+                  alt={doctor.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
               {/* Header */}
               <div className="p-5 pb-0">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border border-border">
-                    <img src={doctor.image} alt={doctor.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-display text-lg text-foreground mb-1 truncate">{doctor.name}</h3>
-                    <p className="text-sm text-primary mb-2">{doctor.specialization}</p>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="w-3.5 h-3.5" />
-                      {doctor.location}
-                    </div>
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-display text-lg text-foreground truncate">{doctor.name}</h3>
+                  <p className="text-sm text-primary font-medium">{doctor.specialization}</p>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                    <MapPin className="w-3.5 h-3.5" />
+                    {doctor.location}
                   </div>
                 </div>
               </div>

@@ -2,6 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/home/HeroSection";
 import ProductCategoriesSection from "@/components/home/ProductCategoriesSection";
+import VideoTestimonialsSection from "@/components/home/VideoTestimonialsSection";
 import BestsellersSection from "@/components/home/BestsellersSection";
 import NewArrivalsSection from "@/components/home/NewArrivalsSection";
 import FixHairSection from "@/components/home/FixHairSection";
@@ -27,6 +28,11 @@ const Index = () => {
         {/* Shop by Product Category */}
         <ScrollReveal animation="fade-up" delay={0.1}>
           <ProductCategoriesSection />
+        </ScrollReveal>
+
+        {/* Video Testimonials - New Section */}
+        <ScrollReveal animation="fade-up" delay={0.2}>
+          <VideoTestimonialsSection />
         </ScrollReveal>
 
         {/* Bestsellers */}

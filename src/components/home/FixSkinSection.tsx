@@ -38,28 +38,30 @@ const skinConcerns = [
 
 const FixSkinSection = () => {
   return (
-    <section id="fix-skin" className="py-16 md:py-24 bg-background">
+    <section id="fix-skin" className="py-8 md:py-12 bg-background">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left - Concerns Grid */}
-          <div className="order-2 lg:order-1 grid sm:grid-cols-2 gap-4">
+          <div className="order-2 lg:order-1 flex overflow-x-auto pb-4 gap-4 scrollbar-none snap-x">
             {skinConcerns.map((concern) => (
               <a
                 key={concern.id}
                 href={`#skin-${concern.id}`}
-                className={`group p-4 rounded-2xl ${concern.color} border border-transparent hover:border-accent/20 transition-all duration-300`}
+                className={`w-[280px] min-w-[280px] max-w-[280px] flex-shrink-0 snap-start group p-4 rounded-2xl ${concern.color} border border-transparent hover:border-accent/20 transition-all duration-300 h-[400px] flex flex-col`}
               >
-                <div className="w-16 h-16 rounded-full overflow-hidden mb-3 shadow-sm">
+                <div className="h-[220px] w-full rounded-xl overflow-hidden mb-4 shadow-sm relative bg-white/50">
                   <img src={concern.image} alt={concern.title} className="w-full h-full object-cover" />
                 </div>
-                <h3 className="font-display text-lg text-foreground mb-1 group-hover:text-accent transition-colors">
-                  {concern.title}
-                </h3>
-                <p className="text-sm text-muted-foreground mb-3">
-                  {concern.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">
+                <div className="flex-grow">
+                  <h3 className="font-display text-lg text-slate-900 font-bold mb-1 group-hover:text-accent transition-colors">
+                    {concern.title}
+                  </h3>
+                  <p className="text-sm text-slate-900 font-semibold mb-3">
+                    {concern.description}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between mt-auto">
+                  <span className="text-xs text-slate-600 font-semibold">
                     {concern.products} Products
                   </span>
                   <ArrowRight className="w-4 h-4 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -76,7 +78,7 @@ const FixSkinSection = () => {
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
               Fix Your Skin First
             </h2>
-            <p className="text-lg text-muted-foreground mb-6 max-w-md">
+            <p className="text-lg text-slate-900 mb-6 max-w-md font-medium">
               Select your skin concern and discover targeted solutions.
               Dermatologist-aligned formulations for visible results.
             </p>

@@ -13,10 +13,10 @@ const categories = [
 
 const ProductCategoriesSection = () => {
   return (
-    <section id="shop" className="py-16 md:py-24 bg-background">
+    <section id="shop" className="pt-8 pb-4 md:pt-12 md:pb-4 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="flex items-end justify-between mb-10">
+        <div className="flex items-end justify-between mb-6">
           <div>
             <p className="text-sm font-medium text-primary uppercase tracking-wider mb-2">
               Shop by Category
@@ -34,16 +34,17 @@ const ProductCategoriesSection = () => {
           </a>
         </div>
 
-        {/* Categories Grid - Large Tiles */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        {/* Categories Horizontal Scroll */}
+        <div className="flex overflow-x-auto gap-3 md:gap-4 pb-4 scrollbar-none snap-x">
+
           {categories.map((category) => (
             <a
               key={category.id}
               href={`#${category.id}`}
-              className="group relative bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1"
+              className="w-[280px] min-w-[280px] max-w-[280px] h-full snap-start flex-shrink-0 group relative bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col"
             >
-              {/* Image Area */}
-              <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
+              {/* Image Area - Fixed Height */}
+              <div className="h-[220px] w-full bg-muted flex items-center justify-center overflow-hidden">
                 <img
                   src={category.image}
                   alt={category.title}
@@ -52,23 +53,23 @@ const ProductCategoriesSection = () => {
               </div>
 
               {/* Content */}
-              <div className="p-4 md:p-5">
-                <h3 className="font-display text-lg text-foreground mb-1 group-hover:text-primary transition-colors">
+              <div className="p-3">
+                <h3 className="font-display text-sm md:text-base text-foreground mb-0.5 group-hover:text-primary transition-colors truncate">
                   {category.title}
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-[10px] md:text-xs text-muted-foreground">
                   {category.count} Products
                 </p>
               </div>
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/20 transition-colors duration-300" />
+              <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-primary/20 transition-colors duration-300" />
             </a>
           ))}
         </div>
 
         {/* Mobile View All */}
-        <div className="mt-8 text-center md:hidden">
+        <div className="mt-6 text-center md:hidden">
           <a
             href="#all-products"
             className="inline-flex items-center gap-2 text-sm font-medium text-primary"
@@ -78,7 +79,7 @@ const ProductCategoriesSection = () => {
           </a>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

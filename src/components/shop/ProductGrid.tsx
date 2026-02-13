@@ -85,10 +85,11 @@ const ProductGrid = ({ products, columns = 4 }: ProductGridProps) => {
                             </button>
 
                             {/* Quick Add */}
-                            <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-10">
+                            {/* Quick Add */}
+                            <div className="absolute bottom-3 left-3 right-3 z-10">
                                 <Button
                                     variant="default"
-                                    className="w-full"
+                                    className="w-full shadow-lg"
                                     size="sm"
                                     onClick={() => variant && addToCart(product.id, variant.variant_id, 1)}
                                 >

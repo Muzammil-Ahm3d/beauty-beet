@@ -15,13 +15,13 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-white/20 shadow-sm transition-all duration-300">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg group-hover:shadow-primary/25 transition-all duration-300">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg group-hover:shadow-primary/25 transition-all duration-300">
               <img src="/beautybeet_logo.jpeg" alt="BeautyBeet Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="font-display font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
+            <span className="font-display font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
               BeautyBeet
             </span>
           </Link>
@@ -126,13 +126,27 @@ const Header = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="xl:hidden p-2 text-foreground"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile Actions & Menu */}
+          <div className="xl:hidden flex items-center gap-2">
+            <Button variant="ghost" size="icon" className="rounded-full w-12 h-12">
+              <Search className="w-7 h-7 text-foreground" />
+            </Button>
+            <Button variant="ghost" size="icon" className="rounded-full w-12 h-12">
+              <Heart className="w-7 h-7 text-foreground" />
+            </Button>
+            <Button variant="ghost" size="icon" className="rounded-full w-12 h-12 relative">
+              <ShoppingBag className="w-7 h-7 text-foreground" />
+              {cartCount > 0 && (
+                <span className="absolute top-1 right-1 w-3 h-3 bg-primary rounded-full border border-white" />
+              )}
+            </Button>
+            <button
+              className="p-2 text-foreground ml-1"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

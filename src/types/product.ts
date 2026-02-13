@@ -35,6 +35,21 @@ export interface Specification {
     value: string;
 }
 
+export interface Testimonial {
+    id: string;
+    type: 'image' | 'video';
+    url: string;
+    thumbnail?: string; // For videos
+    caption?: string;   // e.g., "Day 1", "Week 2"
+    subtext?: string;   // Longer description
+    author?: string;
+}
+
+export interface FAQ {
+    question: string;
+    answer: string;
+}
+
 export interface Review {
     id: string;
     author: string;
@@ -92,6 +107,16 @@ export interface ProductV2 {
     additional_tips?: string[];
     specifications?: Specification[];
 
+    // Detailed Content (PDF Extraction)
+    detailed_description?: string; // HTML/Rich text
+    testimonials?: Testimonial[];
+    faqs?: FAQ[];
+
+    // AI Reviews & Insights
+    ai_summary?: string; // "AI-generated from customer reviews..."
+    ai_popular_topics?: AITopic[]; // Clickable cloud
+    ai_verified_reviews?: AIVerifiedReview[]; // The filtered/highlighted reviews
+
     // Media
     images: ProductImage[];
 
@@ -109,3 +134,23 @@ export interface ProductV2 {
     is_trending?: boolean;
     tags: string[];
 }
+
+export interface AITopic {
+    topic: string;
+    count: number;
+    sentiment: 'positive' | 'neutral' | 'negative';
+}
+
+export interface AIVerifiedReview {
+    id: string;
+    author: string;
+    rating: number; // 1-5
+    title?: string;
+    content: string; // The review text
+    date?: string;
+    verified: boolean;
+    sentiment?: 'positive' | 'neutral' | 'negative';
+    highlighted_topics?: string[]; // Topics mentioned in this review
+}
+
+
