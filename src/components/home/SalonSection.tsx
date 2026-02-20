@@ -30,7 +30,7 @@ const featuredSalons = [
 
 const SalonSection = () => {
   return (
-    <section id="salons" className="py-10 md:py-16 bg-muted/30">
+    <section id="salons" className="py-4 md:py-6 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8">
@@ -47,8 +47,8 @@ const SalonSection = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-xl mx-auto mb-8">
-          <div className="flex items-center gap-3 p-2 bg-card rounded-full border border-border shadow-soft">
+        <div className="max-w-xl mx-auto mb-8 flex items-center gap-3">
+          <div className="flex-1 flex items-center gap-3 p-2 bg-card rounded-full border border-border shadow-soft">
             <div className="flex-1 flex items-center gap-3 px-4">
               <Search className="w-5 h-5 text-muted-foreground" />
               <input
@@ -61,10 +61,14 @@ const SalonSection = () => {
               Find Salons
             </Button>
           </div>
+          <Button variant="outline" className="rounded-full whitespace-nowrap">
+            View All
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
         </div>
 
         {/* Featured Salons */}
-        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-none snap-x mb-10 items-stretch">
+        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-none snap-x items-stretch">
           {featuredSalons.map((salon, index) => (
             <div
               key={index}
@@ -118,13 +122,6 @@ const SalonSection = () => {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <Button variant="default">
-            View All Salons
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </div>
       </div>
     </section>
   );

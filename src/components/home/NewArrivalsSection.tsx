@@ -9,7 +9,7 @@ const NewArrivalsSection = () => {
   const { addToCart } = useCart();
 
   return (
-    <section className="py-8 md:py-8 bg-background">
+    <section className="py-4 md:py-6 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="flex items-end justify-between mb-3">

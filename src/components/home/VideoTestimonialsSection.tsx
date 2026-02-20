@@ -1,40 +1,48 @@
 
 import { useState } from 'react';
-import { Play, CheckCircle2, X } from 'lucide-react';
+import { Play, CheckCircle2, X, Star, Maximize2 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { Button } from '@/components/ui/button';
 
 const testimonials = [
     {
         id: 1,
         name: "Sarah M.",
+        type: "video",
         image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
         videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        product: "Radiance Serum",
-        position: "object-center"
+        review: "This cream transformed my skin! It feels so hydrated and looks radiant. Highly recommend for anyone with dry skin.",
+        rating: 5,
+        status: "Verified Buyer"
     },
     {
         id: 2,
         name: "Jessica K.",
+        type: "video",
         image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
         videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        product: "Curl Define",
-        position: "object-center"
+        review: "Finally found a product that works for my curls. My hair has never felt softer or more defined. This is a game changer.",
+        rating: 5,
+        status: "Verified Buyer"
     },
     {
         id: 3,
         name: "Elena R.",
+        type: "image",
         image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        product: "Moisturizer",
-        position: "object-top"
+        review: "Absolutely love the natural ingredients. This moisturizer is lightweight yet deeply nourishing. Perfectly fits my daily routine.",
+        rating: 5,
+        status: "Verified Buyer"
     },
     {
         id: 4,
         name: "Priya S.",
+        type: "video",
         image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
         videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        product: "Gift Set",
-        position: "object-center"
+        review: "The gift set was a hit! Everything inside is high quality and smells amazing. Looking forward to trying more products.",
+        rating: 5,
+        status: "Verified Buyer"
     }
 ];
 
@@ -87,59 +95,136 @@ const VideoModal = ({
     );
 };
 
+// ─── Card Component ───────────────────────────────────────────────────
+const TestimonialCard = ({
+    item,
+    index,
+    onPopup,
+}: {
+    item: typeof testimonials[0];
+    index: number;
+    onPopup: (url: string, name: string) => void;
+}) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    return (
+        <ScrollReveal key={item.id} animation="fade-in" delay={index * 0.1}>
+            <div
+                className={`flex flex-col bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-medium border border-slate-100 transition-all duration-300 h-full w-[280px] md:w-full min-w-[280px] flex-shrink-0 snap-start`}
+            >
+                {/* Media Container */}
+                <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden group">
+                    {item.type === 'video' && isPlaying ? (
+                        <iframe
+                            src={`${item.videoUrl}?autoplay=1&rel=0`}
+                            title={`Video review by ${item.name}`}
+                            className="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        />
+                    ) : (
+                        <>
+                            <img
+                                src={item.image}
+                                alt={`Testimonial by ${item.name}`}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            {item.type === 'video' && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                    <button
+                                        onClick={() => setIsPlaying(true)}
+                                        className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+                                    >
+                                        <Play className="w-5 h-5 text-primary fill-primary ml-1" />
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {/* Popup Toggle if Video */}
+                    {item.videoUrl && (
+                        <button
+                            onClick={() => onPopup(item.videoUrl!, item.name)}
+                            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white backdrop-blur-sm transition-colors opacity-0 group-hover:opacity-100"
+                        >
+                            <Maximize2 className="w-4 h-4" />
+                        </button>
+                    )}
+                </div>
+
+                {/* Content Container */}
+                <div className="p-4 flex flex-col flex-grow">
+                    {/* Rating */}
+                    <div className="flex gap-0.5 mb-2">
+                        {[...Array(item.rating)].map((_, i) => (
+                            <Star key={i} className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                        ))}
+                    </div>
+
+                    {/* Review Text */}
+                    <p
+                        className={`text-slate-700 text-sm italic leading-relaxed mb-4 transition-all duration-300 ${!isExpanded ? 'line-clamp-2' : ''}`}
+                    >
+                        "{item.review}"
+                    </p>
+
+                    {/* Read More button */}
+                    {item.review.length > 60 && (
+                        <button
+                            onClick={() => setIsExpanded(!isExpanded)}
+                            className="text-xs font-bold text-primary hover:text-primary-dark transition-colors mb-4 text-left w-fit"
+                        >
+                            {isExpanded ? 'Show Less' : 'Read More'}
+                        </button>
+                    )}
+
+                    {/* Customer Info (Pushed to bottom) */}
+                    <div className="mt-auto flex flex-col">
+                        <div className="flex items-center gap-1.5 leading-tight mb-0.5">
+                            <span className="font-bold text-slate-900 text-sm">{item.name}</span>
+                            <CheckCircle2 className="w-3 h-3 text-primary" />
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wider uppercase">
+                            {item.status}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </ScrollReveal>
+    );
+};
+
 // ─── Main Section ────────────────────────────────────────────────────
 const VideoTestimonialsSection = () => {
     const [activeVideo, setActiveVideo] = useState<{ url: string; name: string } | null>(null);
 
     return (
         <>
-            <section className="pt-4 pb-4 md:pt-6 md:pb-6 bg-background">
+            <section className="py-4 md:py-6 bg-white overflow-hidden">
                 <div className="container mx-auto px-4">
                     <ScrollReveal animation="fade-up">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center justify-between mb-6">
                             <div>
-                                <p className="text-sm font-medium text-primary uppercase tracking-wider mb-1">
+                                <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">
                                     Real Stories
                                 </p>
-                                <h2 className="font-display text-xl md:text-2xl text-foreground">
+                                <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">
                                     Video Reviews
                                 </h2>
                             </div>
                         </div>
                     </ScrollReveal>
 
-                    {/* Grid Layout */}
-                    <div className="flex overflow-x-auto pb-4 gap-4 sm:grid sm:grid-cols-4 sm:gap-6 sm:px-0 sm:mx-0 scrollbar-none snap-x">
+                    {/* Grid/Carousel Layout */}
+                    <div className="flex overflow-x-auto pb-4 gap-4 md:grid md:grid-cols-4 md:gap-6 scrollbar-none snap-x items-stretch">
                         {testimonials.map((item, index) => (
-                            <ScrollReveal key={item.id} animation="fade-in" delay={index * 0.1}>
-                                <div
-                                    className="w-[160px] md:w-auto h-[200px] md:h-[180px] rounded-2xl relative overflow-hidden group shadow-soft hover:shadow-medium transition-all cursor-pointer snap-start flex-shrink-0"
-                                    onClick={() => setActiveVideo({ url: item.videoUrl, name: item.name })}
-                                >
-                                    <img
-                                        src={item.image}
-                                        alt={`Video review by ${item.name}`}
-                                        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${item.position}`}
-                                    />
-
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
-                                        {/* Play Button */}
-                                        <div className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center mb-2 shadow-sm group-hover:scale-110 transition-transform">
-                                            <Play className="w-3.5 h-3.5 text-primary fill-primary ml-0.5" />
-                                        </div>
-
-                                        <div className="font-bold text-white text-base leading-tight drop-shadow-md flex flex-col">
-                                            <span className="flex items-center gap-1.5">
-                                                {item.name}
-                                                <CheckCircle2 className="w-3 h-3 text-primary" />
-                                            </span>
-                                            <span className="text-[10px] font-normal text-white/80 uppercase tracking-wide mt-0.5">
-                                                Verified Buyer
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ScrollReveal>
+                            <TestimonialCard
+                                key={item.id}
+                                item={item}
+                                index={index}
+                                onPopup={(url, name) => setActiveVideo({ url, name })}
+                            />
                         ))}
                     </div>
                 </div>

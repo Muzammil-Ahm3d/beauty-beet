@@ -36,7 +36,7 @@ const dermatologists = [
 
 const DermatologistSection = () => {
   return (
-    <section id="dermatologists" className="py-10 md:py-16 bg-background">
+    <section id="dermatologists" className="py-4 md:py-6 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8">
@@ -53,8 +53,8 @@ const DermatologistSection = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-xl mx-auto mb-8">
-          <div className="flex items-center gap-3 p-2 bg-card rounded-full border border-border shadow-soft">
+        <div className="max-w-xl mx-auto mb-8 flex items-center gap-3">
+          <div className="flex-1 flex items-center gap-3 p-2 bg-card rounded-full border border-border shadow-soft">
             <div className="flex-1 flex items-center gap-3 px-4">
               <Search className="w-5 h-5 text-muted-foreground" />
               <input
@@ -67,10 +67,14 @@ const DermatologistSection = () => {
               Find Experts
             </Button>
           </div>
+          <Button variant="outline" className="rounded-full whitespace-nowrap">
+            View All
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
         </div>
 
         {/* Dermatologists Grid */}
-        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-none snap-x mb-10">
+        <div className="flex overflow-x-auto pb-4 gap-4 scrollbar-none snap-x">
           {dermatologists.map((doctor, index) => (
             <div
               key={index}
@@ -129,13 +133,6 @@ const DermatologistSection = () => {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <Button variant="outline">
-            View All Dermatologists
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </div>
       </div>
     </section>
   );

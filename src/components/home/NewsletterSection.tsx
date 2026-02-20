@@ -12,23 +12,23 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-background">
+    <section className="py-4 md:py-6 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center">
           {/* Icon */}
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-6">
             <Mail className="w-7 h-7 text-primary" />
           </div>
-          
+
           <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
             Stay in the Loop
           </h2>
-          
+
           <p className="text-muted-foreground mb-8">
-            Get exclusive offers, new product launches, and expert beauty tips 
+            Get exclusive offers, new product launches, and expert beauty tips
             delivered straight to your inbox.
           </p>
-          
+
           {/* Benefits */}
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {[
@@ -42,7 +42,7 @@ const NewsletterSection = () => {
               </div>
             ))}
           </div>
-          
+
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <div className="flex-1 relative">
@@ -60,7 +60,7 @@ const NewsletterSection = () => {
               Subscribe
             </Button>
           </form>
-          
+
           <p className="mt-4 text-xs text-muted-foreground">
             No spam, ever. Unsubscribe anytime.
           </p>

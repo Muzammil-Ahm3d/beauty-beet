@@ -14,6 +14,7 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import NewsletterSection from "@/components/home/NewsletterSection";
 import ProblemNavigation from "@/components/home/ProblemNavigation";
 import RoutineKits from "@/components/home/RoutineKits";
+import IngredientsScience from "@/components/home/IngredientsScience";
 
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
@@ -42,14 +43,24 @@ const Index = () => {
           <RoutineKits />
         </ScrollReveal>
 
+        {/* Salon Near You */}
+        <ScrollReveal animation="fade-up">
+          <SalonSection />
+        </ScrollReveal>
+
+        {/* Ingredients + Science */}
+        <ScrollReveal animation="fade-up" delay={0.1}>
+          <IngredientsScience />
+        </ScrollReveal>
+
         {/* Video Testimonials */}
         <ScrollReveal animation="fade-up" delay={0.2}>
           <VideoTestimonialsSection />
         </ScrollReveal>
 
-        {/* Shop by Product Category moved down */}
+        {/* Dermatologist Near You */}
         <ScrollReveal animation="fade-up" delay={0.1}>
-          <ProductCategoriesSection />
+          <DermatologistSection />
         </ScrollReveal>
 
         {/* New Arrivals */}
@@ -57,30 +68,26 @@ const Index = () => {
           <NewArrivalsSection />
         </ScrollReveal>
 
-        {/* Fix Your Hair First */}
-        <ScrollReveal animation="slide-right">
+        {/* Fix Your Hair First - Commented out */}
+        {/* <ScrollReveal animation="slide-right">
           <FixHairSection />
-        </ScrollReveal>
+        </ScrollReveal> */}
 
-        {/* Fix Your Skin First */}
-        <ScrollReveal animation="slide-left">
+        {/* Fix Your Skin First - Commented out */}
+        {/* <ScrollReveal animation="slide-left">
           <FixSkinSection />
-        </ScrollReveal>
+        </ScrollReveal> */}
 
         {/* Why Choose BeautyBeet */}
         <ScrollReveal animation="scale-up">
           <TrustSection />
         </ScrollReveal>
 
-        {/* Salon Near You */}
-        <ScrollReveal animation="fade-up">
-          <SalonSection />
+        {/* Shop by Product Category */}
+        <ScrollReveal animation="fade-up" delay={0.1}>
+          <ProductCategoriesSection />
         </ScrollReveal>
 
-        {/* Dermatologist Near You */}
-        <ScrollReveal animation="fade-up" delay={0.1}>
-          <DermatologistSection />
-        </ScrollReveal>
 
         {/* Testimonials */}
         <ScrollReveal animation="fade-up">

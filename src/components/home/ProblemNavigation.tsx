@@ -26,7 +26,7 @@ const concerns = [
 
 const ProblemNavigation = () => {
     return (
-        <section className="py-6 bg-white">
+        <section className="py-4 md:py-6 bg-white">
             <div className="container mx-auto px-4">
                 <div className="text-left mb-5">
                     <span className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-1 block">

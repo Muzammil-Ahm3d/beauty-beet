@@ -9,7 +9,7 @@ const BestsellersSection = () => {
   const { addToCart } = useCart();
 
   return (
-    <section className="py-8 md:py-8 bg-muted/30">
+    <section className="py-4 md:py-6 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="flex items-end justify-between mb-3">

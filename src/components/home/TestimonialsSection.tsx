@@ -99,10 +99,10 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-12 md:py-8 bg-primary text-primary-foreground">
+    <section className="py-4 md:py-6 bg-primary text-primary-foreground">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-8">
           <p className="text-sm font-medium text-primary-foreground/80 uppercase tracking-wider mb-3">
             Customer Reviews
           </p>

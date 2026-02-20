@@ -35,10 +35,10 @@ const trustPoints = [
 
 const TrustSection = () => {
   return (
-    <section className="py-8 md:py-12 bg-primary text-primary-foreground">
+    <section className="py-4 md:py-6 bg-primary text-primary-foreground">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-8">
           <h2 className="font-display text-3xl md:text-4xl mb-4">
             Why Choose BeautyBeet
           </h2>

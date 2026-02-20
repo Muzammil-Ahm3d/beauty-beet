@@ -13,7 +13,7 @@ const categories = [
 
 const ProductCategoriesSection = () => {
   return (
-    <section id="shop" className="pt-8 pb-4 md:pt-12 md:pb-4 bg-background">
+    <section id="shop" className="py-4 md:py-6 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="flex items-end justify-between mb-6">
