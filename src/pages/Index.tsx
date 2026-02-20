@@ -12,6 +12,8 @@ import DermatologistSection from "@/components/home/DermatologistSection";
 import TrustSection from "@/components/home/TrustSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import NewsletterSection from "@/components/home/NewsletterSection";
+import ProblemNavigation from "@/components/home/ProblemNavigation";
+import RoutineKits from "@/components/home/RoutineKits";
 
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
@@ -25,19 +27,29 @@ const Index = () => {
           <HeroSection />
         </ScrollReveal>
 
-        {/* Shop by Product Category */}
-        <ScrollReveal animation="fade-up" delay={0.1}>
-          <ProductCategoriesSection />
+        {/* Bestsellers section moved up */}
+        <ScrollReveal animation="fade-up">
+          <BestsellersSection />
         </ScrollReveal>
 
-        {/* Video Testimonials - New Section */}
+        {/* Shop by Concern */}
+        <ScrollReveal animation="fade-up" delay={0.1}>
+          <ProblemNavigation />
+        </ScrollReveal>
+
+        {/* Bundles & Routine Kits */}
+        <ScrollReveal animation="fade-up" delay={0.1}>
+          <RoutineKits />
+        </ScrollReveal>
+
+        {/* Video Testimonials */}
         <ScrollReveal animation="fade-up" delay={0.2}>
           <VideoTestimonialsSection />
         </ScrollReveal>
 
-        {/* Bestsellers */}
-        <ScrollReveal animation="fade-up">
-          <BestsellersSection />
+        {/* Shop by Product Category moved down */}
+        <ScrollReveal animation="fade-up" delay={0.1}>
+          <ProductCategoriesSection />
         </ScrollReveal>
 
         {/* New Arrivals */}

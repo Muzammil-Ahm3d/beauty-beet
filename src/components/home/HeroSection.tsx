@@ -10,6 +10,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Link } from "react-router-dom";
+import StatsBanner from "./StatsBanner";
 
 const HeroSection = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -102,8 +103,10 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="pt-28 pb-4 bg-background overflow-hidden animate-fade-in">
+    <section className="pt-[156px] pb-4 bg-background overflow-hidden animate-fade-in">
       <div className="container mx-auto px-4">
+
+
         {/* Main Hero Carousel */}
         <div className="mb-6">
           <Carousel
@@ -201,6 +204,9 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Trust Stats Banner - Full Width */}
+      <StatsBanner />
     </section>
   );
 };
