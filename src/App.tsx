@@ -42,6 +42,9 @@ import AdminDermatologists from "./pages/admin/AdminDermatologists";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminUserTracking from "./pages/admin/AdminUserTracking";
+import AdminPromoStripe from "./pages/admin/AdminPromoStripe";
+import AdminTargetedSolutions from "./pages/admin/AdminTargetedSolutions";
+import AdminRoutineKits from "./pages/admin/AdminRoutineKits";
 
 import { HelmetProvider } from "react-helmet-async";
 import { CartProvider } from "./context/CartContext";
@@ -99,13 +102,16 @@ const App = () => (
                     <Route path="products/:id" element={<AdminProductForm />} />
                     <Route path="categories" element={<AdminCategories />} />
                     <Route path="services" element={<AdminServices />} />
-                    <Route path="concerns" element={<AdminConcernCards />} />
+                    {/* <Route path="concerns" element={<AdminConcernCards />} /> */}
+                    <Route path="promo-stripe" element={<AdminPromoStripe />} />
+                    <Route path="targeted-solutions" element={<AdminTargetedSolutions />} />
+                    <Route path="routine-kits" element={<AdminRoutineKits />} />
                     <Route path="videos" element={<AdminVideoTestimonials />} />
                     <Route path="salons" element={<AdminSalons />} />
                     <Route path="dermatologists" element={<AdminDermatologists />} />
                     <Route path="testimonials" element={<AdminTestimonials />} />
                     <Route path="orders" element={<AdminOrders />} />
-                    <Route path="tracking" element={<AdminUserTracking />} />
+                    {/* <Route path="tracking" element={<AdminUserTracking />} /> */}
                   </Route>
 
                   {/* Catch-all */}
