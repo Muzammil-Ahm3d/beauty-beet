@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { Button } from "@/components/ui/button";
-import { Star, ShoppingBag, ArrowLeft, Heart, Check, Share2, Plus, Minus } from "lucide-react";
+import { Star, ShoppingBag, ArrowLeft, Heart, Check, Share2, Plus, Minus, Leaf, Beaker, Clock, Zap, Sparkles } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -10,6 +10,9 @@ import { Helmet } from "react-helmet-async";
 import { useCart } from "@/context/CartContext";
 import ProductInfoSection from "@/components/shop/ProductInfoSection";
 import AIReviews from "@/components/shop/AIReviews";
+import RealResults from "@/components/shop/RealResults";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const ProductDetails = () => {
     const { slug, category, subcategory } = useParams();
@@ -198,59 +201,182 @@ const ProductDetails = () => {
                                 </div>
 
                                 {/* Add to Cart + Buy Now */}
-                                <div className="flex gap-4 mb-8">
+                                <div className="flex flex-col sm:flex-row gap-4 mb-10">
                                     <Button
                                         size="lg"
-                                        className="flex-1 gap-2"
+                                        className="flex-[2] gap-3 h-14 rounded-full text-lg font-bold shadow-lg hover:shadow-primary/20 transition-all font-display"
                                         onClick={handleAddToCart}
                                     >
-                                        <ShoppingBag className="w-5 h-5" />
-                                        Add to Cart
+                                        <ShoppingBag className="w-6 h-6" />
+                                        ADD TO CART
                                     </Button>
-                                    <Button size="lg" variant="outline">
-                                        <Heart className="w-5 h-5" />
-                                    </Button>
-                                    <Button size="lg" variant="outline">
-                                        <Share2 className="w-5 h-5" />
-                                    </Button>
+                                    <div className="flex gap-3 flex-1">
+                                        <Button size="lg" variant="outline" className="flex-1 h-14 rounded-full hover:bg-rose-50 hover:text-rose-500 hover:border-rose-200 transition-colors">
+                                            <Heart className="w-6 h-6" />
+                                        </Button>
+                                        <Button size="lg" variant="outline" className="flex-1 h-14 rounded-full">
+                                            <Share2 className="w-6 h-6" />
+                                        </Button>
+                                    </div>
                                 </div>
 
-                                {/* Features */}
-                                <div className="space-y-3 p-6 bg-muted/30 rounded-2xl">
-                                    <div className="flex items-center gap-3 text-sm">
-                                        <Check className="w-5 h-5 text-green-500" />
-                                        <span>100% Ayurvedic & Natural Ingredients</span>
+                                {/* Feature Badges (Image 2 style) */}
+                                <div className="grid grid-cols-3 gap-4 pb-8 mb-8 border-b border-border/50">
+                                    <div className="flex flex-col items-center text-center gap-3 group">
+                                        <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center group-hover:bg-primary/5 transition-colors">
+                                            <Leaf className="w-8 h-8 text-primary" />
+                                        </div>
+                                        <span className="text-[11px] md:text-sm font-bold uppercase tracking-wide text-foreground">100% Vegan</span>
                                     </div>
-                                    <div className="flex items-center gap-3 text-sm">
-                                        <Check className="w-5 h-5 text-green-500" />
-                                        <span>Lab Tested & Dermatologically Safe</span>
+                                    <div className="flex flex-col items-center text-center gap-3 group">
+                                        <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center group-hover:bg-primary/5 transition-colors">
+                                            <Beaker className="w-8 h-8 text-primary" />
+                                        </div>
+                                        <span className="text-[11px] md:text-sm font-bold uppercase tracking-wide text-foreground">Paraben Free</span>
                                     </div>
-                                    <div className="flex items-center gap-3 text-sm">
-                                        <Check className="w-5 h-5 text-green-500" />
-                                        <span>Free Shipping on Orders Above ₹499</span>
-                                    </div>
-                                    <div className="flex items-center gap-3 text-sm">
-                                        <Check className="w-5 h-5 text-green-500" />
-                                        <span>30-Day Money Back Guarantee</span>
+                                    <div className="flex flex-col items-center text-center gap-3 group">
+                                        <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center group-hover:bg-primary/5 transition-colors">
+                                            <Clock className="w-8 h-8 text-primary" />
+                                        </div>
+                                        <span className="text-[11px] md:text-sm font-bold uppercase tracking-wide text-foreground">48-Hour Infused</span>
                                     </div>
                                 </div>
                             </ScrollReveal>
                         </div>
                     </div>
 
-                    {/* Detailed Info Section (PDF Content & Testimonials) */}
-                    <ProductInfoSection
-                        description={product.detailed_description || ""}
-                        testimonials={product.testimonials}
-                        faqs={product.faqs}
-                    />
+                    {/* Detailed Info Tabs (Image 2 style) */}
+                    <div className="mt-12">
+                        <Tabs defaultValue="ingredients" className="w-full">
+                            <TabsList className="w-full justify-start h-auto bg-transparent border-b border-border rounded-none p-0 gap-8">
+                                <TabsTrigger
+                                    value="ingredients"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-4 data-[state=active]:border-primary rounded-none px-2 py-4 text-sm md:text-base font-bold uppercase tracking-widest text-muted-foreground data-[state=active]:text-foreground transition-all"
+                                >
+                                    Ingredients
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="usage"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-4 data-[state=active]:border-primary rounded-none px-2 py-4 text-sm md:text-base font-bold uppercase tracking-widest text-muted-foreground data-[state=active]:text-foreground transition-all"
+                                >
+                                    How to Use
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="results"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-4 data-[state=active]:border-primary rounded-none px-2 py-4 text-sm md:text-base font-bold uppercase tracking-widest text-muted-foreground data-[state=active]:text-foreground transition-all"
+                                >
+                                    Real Results
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="reviews"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-4 data-[state=active]:border-primary rounded-none px-2 py-4 text-sm md:text-base font-bold uppercase tracking-widest text-muted-foreground data-[state=active]:text-foreground transition-all"
+                                >
+                                    Review
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="faqs"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-4 data-[state=active]:border-primary rounded-none px-2 py-4 text-sm md:text-base font-bold uppercase tracking-widest text-muted-foreground data-[state=active]:text-foreground transition-all"
+                                >
+                                    FAQ
+                                </TabsTrigger>
+                            </TabsList>
 
-                    {/* AI Reviews Section */}
-                    <AIReviews
-                        summary={product.ai_summary}
-                        topics={product.ai_popular_topics}
-                        reviews={product.ai_verified_reviews}
-                    />
+                            <TabsContent value="ingredients" className="pt-12 focus-visible:outline-none">
+                                <ProductInfoSection
+                                    productName={product.name}
+                                    description={product.short_description}
+                                    longDescription={product.long_description}
+                                    ingredients={product.key_ingredients}
+                                />
+                            </TabsContent>
+
+                            <TabsContent value="usage" className="pt-12 focus-visible:outline-none">
+                                <div className="max-w-3xl mx-auto space-y-12">
+                                    <div className="bg-muted/30 p-8 md:p-12 rounded-[32px] border border-border/50">
+                                        <h3 className="font-display text-3xl mb-8 flex items-center gap-3 text-foreground">
+                                            <Zap className="w-8 h-8 text-primary fill-primary/20" />
+                                            The Ritual
+                                        </h3>
+                                        <ol className="space-y-8">
+                                            {product.usage_instructions.steps.map((step, idx) => (
+                                                <li key={idx} className="flex gap-6 items-start group">
+                                                    <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shadow-soft group-hover:scale-110 transition-transform">
+                                                        {idx + 1}
+                                                    </span>
+                                                    <div className="pt-1">
+                                                        <p className="text-foreground text-lg leading-relaxed font-medium">
+                                                            {step}
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ol>
+                                        {product.additional_tips && product.additional_tips.length > 0 && (
+                                            <div className="mt-12 pt-8 border-t border-border/50">
+                                                <h4 className="font-bold text-primary flex items-center gap-2 mb-4">
+                                                    <span className="text-2xl">💡</span>
+                                                    Expert Tips
+                                                </h4>
+                                                <ul className="space-y-3">
+                                                    {product.additional_tips.map((tip, i) => (
+                                                        <li key={i} className="text-muted-foreground italic">
+                                                            "{tip}"
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value="results" className="pt-12 focus-visible:outline-none">
+                                <RealResults testimonials={product.testimonials} />
+                            </TabsContent>
+
+                            <TabsContent value="reviews" className="pt-12 focus-visible:outline-none">
+                                <AIReviews
+                                    summary={product.ai_summary}
+                                    topics={product.ai_popular_topics}
+                                    reviews={product.ai_verified_reviews}
+                                />
+                            </TabsContent>
+
+                            <TabsContent value="faqs" className="pt-12 focus-visible:outline-none">
+                                <div className="max-w-4xl mx-auto space-y-12">
+                                    <ScrollReveal animation="fade-up">
+                                        <div className="bg-muted/30 rounded-[32px] p-8 md:p-12 border border-border/50">
+                                            <div className="flex items-center gap-4 mb-10">
+                                                <div className="w-1.5 h-10 bg-primary rounded-full"></div>
+                                                <h3 className="font-display text-3xl md:text-4xl text-foreground">
+                                                    Frequently Asked Questions
+                                                </h3>
+                                            </div>
+
+                                            <Accordion type="single" collapsible className="w-full">
+                                                {product.faqs && product.faqs.length > 0 ? (
+                                                    product.faqs.map((faq, index) => (
+                                                        <AccordionItem key={index} value={`item-${index}`} className="border-border/50">
+                                                            <AccordionTrigger className="text-left font-display text-lg md:text-xl hover:text-primary transition-colors py-6">
+                                                                {faq.question}
+                                                            </AccordionTrigger>
+                                                            <AccordionContent className="text-muted-foreground leading-relaxed pb-6 text-base md:text-lg">
+                                                                {faq.answer}
+                                                            </AccordionContent>
+                                                        </AccordionItem>
+                                                    ))
+                                                ) : (
+                                                    <p className="text-center py-10 text-muted-foreground text-lg">
+                                                        No questions yet. Ask us anything!
+                                                    </p>
+                                                )}
+                                            </Accordion>
+                                        </div>
+                                    </ScrollReveal>
+                                </div>
+                            </TabsContent>
+                        </Tabs>
+                    </div>
 
                     {/* Related Products */}
                     {relatedProducts.length > 0 && (

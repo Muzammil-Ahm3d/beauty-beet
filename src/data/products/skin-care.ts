@@ -133,12 +133,23 @@ export const skinCareProducts: ProductV2[] = [
         ], seo: { meta_title: "Ayurvedic Radiance Skin Brightening Serum", meta_description: "Luminous skin, rooted in ancient wisdom. 100% Natural.", meta_keywords: ["brightening", "ayurvedic", "serum"] },
         variants: [{ variant_id: "sc-fo-5", variant_sku: "sc-fo-5", variant_name: "30ml", variant_price: 649, variant_mrp: 949, discount_percentage: 31, discounted_price: 649, weight_grams: 50, stock_quantity: 90, reorder_point: 20, image_url: "/images/products/face_serum.png" }],
         key_ingredients: [
-            { name: "Rakta Chandan", benefits: "Varnya (Brightener)" },
-            { name: "Saffron", benefits: "Radiance Booster" }
+            { name: "Rakta Chandan (Red Sandalwood)", role: "Varnya (Brightener)", ayurvedic_benefit: "Naturally cools the skin while fading stubborn acne scars and blemishes.", benefits: "Brightening" },
+            { name: "Saffron (Kesar)", role: "Radiance Booster", ayurvedic_benefit: "The world’s most expensive spice, used for centuries to even skin tone and add a golden glow.", benefits: "Radiance" },
+            { name: "Amba Haldi (Wild Turmeric)", role: "Detoxifier", ayurvedic_benefit: "Anti-inflammatory powerhouse that targets dullness and protects against environmental stressors.", benefits: "Detox" },
+            { name: "Swet Chandan (White Sandalwood)", role: "Soother", ayurvedic_benefit: "Provides a calming effect and tightens pores for a refined, smooth texture.", benefits: "Soothing" },
+            { name: "Mulethi (Licorice)", role: "Natural De-Tanner", ayurvedic_benefit: "Gently inhibits melanin to reverse sun damage and tanning without irritation.", benefits: "De-tan" },
+            { name: "Orange Peel & Oil", role: "Vitamin C Source", ayurvedic_benefit: "Rich in natural antioxidants to brighten and provide a refreshing citrus aroma.", benefits: "Antioxidant" },
+            { name: "Almond & Coconut Oil", role: "Lipid Barrier", ayurvedic_benefit: "Deeply penetrates to nourish the skin, improving elasticity and softness.", benefits: "Nourishing" }
         ],
         full_ingredient_list: "Rakta Chandan, Saffron, Amba Haldi, Swet Chandan, Mulethi, Orange Peel & Oil, Almond & Coconut Oil",
         benefits: ["✨ Brightens: Reduces hyperpigmentation", "🌿 Cools: Calms inflammation & redness", "💧 Hydrates: 24hr moisture lock"],
-        usage_instructions: { steps: ["Cleanse", "Apply 3-4 drops", "Seal with SPF/Cream"] },
+        usage_instructions: {
+            steps: [
+                "Cleanse using a gentle Ayurvedic cleanser.",
+                "Apply 3-4 drops on damp skin using upward circular motions.",
+                "Seal with SPF in the morning or a face cream at night."
+            ]
+        },
 
         testimonials: [
             {

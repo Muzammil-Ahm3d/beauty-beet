@@ -20,6 +20,8 @@ export interface Ingredient {
     name: string;
     percentage?: string;
     benefits: string;
+    role?: string;
+    ayurvedic_benefit?: string;
     source?: string;
     allergen?: boolean;
 }
