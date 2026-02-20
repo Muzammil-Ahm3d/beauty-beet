@@ -4,13 +4,13 @@ const StatsBanner = () => {
     const stats = [
         {
             icon: Star,
-            value: "4.8/5",
+            value: "4.9/5",
             label: "Rated",
             iconColor: "text-amber-400",
         },
         {
             icon: Smile,
-            value: "5000+",
+            value: "50K+",
             label: "Happy customers",
             iconColor: "text-amber-500",
         },

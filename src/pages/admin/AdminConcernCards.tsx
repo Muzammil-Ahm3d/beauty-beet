@@ -75,9 +75,9 @@ const AdminConcernCards = () => {
                 ))}
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="flex overflow-x-auto pb-6 gap-4 scrollbar-none snap-x">
                 {filtered.map((c) => (
-                    <div key={c.id} className="bg-white rounded-xl border border-slate-200 overflow-hidden group hover:shadow-md transition-all">
+                    <div key={c.id} className="w-[280px] min-w-[280px] flex-shrink-0 snap-start bg-white rounded-xl border border-slate-200 overflow-hidden group hover:shadow-md transition-all">
                         <div className="h-44 relative">
                             <img src={c.image} alt={c.title} className="w-full h-full object-cover" />
                         </div>

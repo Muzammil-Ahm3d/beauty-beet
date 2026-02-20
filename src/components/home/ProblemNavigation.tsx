@@ -28,21 +28,26 @@ const ProblemNavigation = () => {
     return (
         <section className="py-4 md:py-6 bg-white">
             <div className="container mx-auto px-4">
-                <div className="text-left mb-5">
-                    <span className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-1 block">
-                        Targeted Solutions
-                    </span>
-                    <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">
-                        Shop by Concern
-                    </h2>
+                <div className="flex justify-between items-end mb-5">
+                    <div className="text-left">
+                        <span className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-1 block">
+                            Targeted Solutions
+                        </span>
+                        <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">
+                            Shop by Concern
+                        </h2>
+                    </div>
+                    <Link to="/shop" className="text-sm font-semibold text-primary hover:underline shrink-0 mb-1 md:mb-2 ml-4">
+                        View All
+                    </Link>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="flex overflow-x-auto pb-6 gap-4 scrollbar-none snap-x">
                     {concerns.map((concern, index) => (
                         <Link
                             key={index}
                             to={concern.href}
-                            className="group relative bg-white border border-slate-100 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                            className="w-[260px] min-w-[260px] md:w-[280px] md:min-w-[280px] flex-shrink-0 snap-start group relative bg-white border border-slate-100 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                         >
                             <div className="aspect-[4/3] overflow-hidden">
                                 <img

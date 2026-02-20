@@ -29,20 +29,26 @@ const RoutineKits = () => {
     return (
         <section className="py-4 md:py-6 bg-white">
             <div className="container mx-auto px-4">
-                <div className="text-left mb-5">
-                    <span className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-1 block">
-                        Save More
-                    </span>
-                    <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">
-                        Bundles & Routine Kits
-                    </h2>
+                <div className="flex justify-between items-end mb-5">
+                    <div className="text-left">
+                        <span className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-1 block">
+                            Save More
+                        </span>
+                        <h2 className="font-display text-2xl md:text-3xl font-bold text-slate-900">
+                            Bundles & Routine Kits
+                        </h2>
+                    </div>
+                    {/* Added Link import to the top or if it's not present, we need to add it */}
+                    <a href="/shop" className="text-sm font-semibold text-primary hover:underline shrink-0 mb-1 md:mb-2 ml-4">
+                        View All
+                    </a>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="flex overflow-x-auto pb-6 gap-4 scrollbar-none snap-x">
                     {kits.map((kit, index) => (
                         <div
                             key={index}
-                            className={`group rounded-2xl ${kit.bgColor} overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
+                            className={`w-[280px] min-w-[280px] md:w-[300px] md:min-w-[300px] flex-shrink-0 snap-start group rounded-2xl ${kit.bgColor} overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
                         >
                             <div className="aspect-square overflow-hidden p-4">
                                 <img
